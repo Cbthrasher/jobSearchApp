@@ -15,7 +15,7 @@
    - Create a chatbot interface to ask users relevant questions for tailoring their resume.
    - Gather user responses and use them to customize the resume for each job application.
 
-5. **Auto-Filling Form Data**:
+*5. **Auto-Filling Form Data**:
    - Use Selenium to automatically fill out common form fields in job application pages.
    - Populate fields such as name, email, phone number, address, etc., with user information.
 
