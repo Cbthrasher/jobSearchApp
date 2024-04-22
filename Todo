@@ -1,17 +1,17 @@
-1. **GUI Development**:
+*1. **GUI Development**:
    - Design and implement the graphical user interface (GUI) using tkinter or another GUI framework.
    - Include entry fields for keywords, location, and any other relevant information.
    - Add buttons for actions such as searching for jobs and submitting applications.
 
-2. **User Preferences**:
+*2. **User Preferences**:
    - Implement functionality to load and save user preferences from/to a JSON file.
    - Include default values for keywords and location if no preferences are found.
 
-3. **Job Search Functionality**:
+*3. **Job Search Functionality**:
    - Retrieve job listings from online job boards or career websites based on the user's input.
    - Display job listings in the GUI for the user to review.
 
-4. **Resume Tailoring Chatbot**:
+*4. **Resume Tailoring Chatbot**:
    - Create a chatbot interface to ask users relevant questions for tailoring their resume.
    - Gather user responses and use them to customize the resume for each job application.
 
@@ -19,7 +19,7 @@
    - Use Selenium to automatically fill out common form fields in job application pages.
    - Populate fields such as name, email, phone number, address, etc., with user information.
 
-6. **Error Handling**:
+*6. **Error Handling**:
    - Implement robust error handling mechanisms to handle unexpected errors gracefully.
    - Provide informative error messages to the user in case of failures or issues.
 
