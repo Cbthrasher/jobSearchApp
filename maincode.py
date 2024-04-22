@@ -10,12 +10,12 @@ class JobSearchApp:
     def __init__(self, master):
         self.master = master
         master.title("Automated Job Search")
-        master.geometry("400x200")
+        master.geometry("400x250")
 
         # Load user preferences from JSON file
         self.load_preferences()
 
-        # Create labels and entry fields for keywords and location
+        # Create labels and entry fields for keywords, location, and analytics
         self.keywords_label = tk.Label(master, text="Keywords:")
         self.keywords_label.grid(row=0, column=0, padx=10, pady=5)
         self.keywords_entry = tk.Entry(master, width=30)
@@ -28,12 +28,25 @@ class JobSearchApp:
         self.location_entry.grid(row=1, column=1, padx=10, pady=5)
         self.location_entry.insert(0, self.preferences['location'])  # Set default value from preferences
 
+        self.analytics_label = tk.Label(master, text="Analytics:")
+        self.analytics_label.grid(row=2, column=0, padx=10, pady=5)
+        self.analytics_text = tk.Text(master, height=5, width=30)
+        self.analytics_text.grid(row=2, column=1, padx=10, pady=5)
+
         # Button to initiate job search
         self.search_button = tk.Button(master, text="Search Jobs", command=self.search_jobs)
-        self.search_button.grid(row=2, columnspan=2, padx=10, pady=10)
+        self.search_button.grid(row=3, columnspan=2, padx=10, pady=10)
 
         # Load SpaCy English language model
         self.nlp = spacy.load('en_core_web_sm')
+
+        # Initialize analytics
+        self.analytics = {
+            'applications_submitted': 0,
+            'response_rate': 0,
+            'interview_invitations': 0
+        }
+        self.update_analytics_display()
 
     def load_preferences(self):
         # Load user preferences from JSON file, or set default values if file doesn't exist
@@ -59,6 +72,18 @@ class JobSearchApp:
 
         # Integrate chatbot for resume tailoring
         self.resume_tailoring_chatbot()
+
+        # Update analytics
+        self.analytics['applications_submitted'] += 1
+        self.update_analytics_display()
+
+    def update_analytics_display(self):
+        # Update analytics display in the GUI
+        analytics_info = f"Applications Submitted: {self.analytics['applications_submitted']}\n" \
+                         f"Response Rate: {self.analytics['response_rate']}%\n" \
+                         f"Interview Invitations: {self.analytics['interview_invitations']}"
+        self.analytics_text.delete('1.0', tk.END)
+        self.analytics_text.insert(tk.END, analytics_info)
 
     def resume_tailoring_chatbot(self):
         # Questions for resume tailoring
@@ -138,6 +163,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
