@@ -1,8 +1,6 @@
 Set up for mac OS
 
 
-Sure! Here are the simplified instructions for creating an installation wizard for your Python code, suitable for copy and paste:
-
 Install Dependencies:
 
 Open Terminal on your MacBook Pro.
