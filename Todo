@@ -56,7 +56,7 @@ Provide Actionable Feedback: Present the tailored suggestions to the user in a c
     - Provide users with a selection of professionally designed resume templates to choose from.
     - Allow customization and previewing of resumes within the application.
 
-12. **Tracking and Analytics**:
+*12. **Tracking and Analytics**:
     - Implement tracking and analytics features to monitor the user's job search activity.
     - Track the number of applications submitted, response rates, and interview invitations.
 
@@ -67,6 +67,35 @@ Provide Actionable Feedback: Present the tailored suggestions to the user in a c
 14. **Testing and Debugging**:
     - Test each feature thoroughly to ensure functionality and reliability.
     - Debug any issues or errors that arise during testing.
+       Testing the GUI:
+
+Run the script and ensure that the GUI window appears without any errors.
+Enter some keywords and location in the respective entry fields.
+Click on the "Search Jobs" button and verify that the chatbot window opens for resume tailoring.
+Testing Analytics Display:
+
+Verify that the analytics section in the GUI displays the correct information.
+Submit some job applications using the "Search Jobs" button and check if the analytics are updated accordingly.
+Testing Resume Analysis:
+
+Implement the analyze_resume method to perform resume parsing and analysis using SpaCy.
+Test the resume analysis functionality by providing sample resume text and job descriptions.
+Ensure that the matched skills and their similarity scores are printed correctly.
+Debugging:
+
+If you encounter any errors or unexpected behavior, review the code carefully to identify the source of the issue.
+Use print statements or logging to track the flow of execution and identify where the problem occurs.
+Check for typos, syntax errors, or incorrect variable names.
+Use try-except blocks to catch and handle exceptions gracefully.
+Refer to any error messages or stack traces to understand the nature of the problem and troubleshoot accordingly.
+Testing with Real Data:
+
+Once you're confident in the functionality of the code, test it with real resume data and job descriptions to ensure accurate analysis and application submission.
+Refinement:
+
+Refine the code based on testing results and user feedback.
+Optimize performance, improve user experience, and address any usability issues.
+
 
 15. **Documentation and User Guide**:
     - Create documentation and a user guide to help users understand how to use the application effectively.
