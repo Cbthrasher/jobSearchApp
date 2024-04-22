@@ -1,0 +1,14 @@
+[Unit]
+Description=Job Search App
+After=network.target
+
+[Service]
+User=your_username
+Group=your_group
+WorkingDirectory=/path/to/your/application
+ExecStart=/usr/bin/python3 /path/to/your/application/main.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
