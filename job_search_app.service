@@ -3,10 +3,8 @@ Description=Job Search App
 After=network.target
 
 [Service]
-User=your_username
-Group=your_group
-WorkingDirectory=/path/to/your/application
-ExecStart=/usr/bin/python3 /path/to/your/application/main.py
+WorkingDirectory=/path/to/your/repository
+ExecStart=/usr/bin/python3 /path/to/your/repository/maincode.py
 Restart=always
 RestartSec=3
 
