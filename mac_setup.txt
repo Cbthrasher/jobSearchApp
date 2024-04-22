@@ -1,0 +1,43 @@
+Set up for mac OS
+
+
+Sure! Here are the simplified instructions for creating an installation wizard for your Python code, suitable for copy and paste:
+
+Install Dependencies:
+
+Open Terminal on your MacBook Pro.
+Install py2app using pip:
+Copy code
+pip install py2app
+Create a Setup Script:
+
+Create a file named setup.py in the root directory of your project.
+Copy and paste the following code into setup.py:
+python
+Copy code
+from setuptools import setup
+
+APP = ['main.py']
+OPTIONS = {
+    'argv_emulation': True,
+}
+
+setup(
+    app=APP,
+    options={'py2app': OPTIONS},
+    setup_requires=['py2app'],
+)
+Package Your Application:
+
+In Terminal, navigate to the directory containing your main.py and setup.py files.
+Run the following command to create the standalone macOS application:
+arduino
+Copy code
+python setup.py py2app
+Distribute Your Application:
+
+Once the packaging process is complete, you'll find a dist directory in your project folder.
+Inside the dist directory, you'll find your standalone macOS application (.app file).
+Distribute the .app file to users, who can then double-click it to install and run your application.
+These steps will allow you to create an installation wizard for your Python code, making it easy for users to install and run your application on their macOS devices.
+
