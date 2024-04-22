@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 import time
 import json
+import spacy
 
 class JobSearchApp:
     def __init__(self, master):
@@ -32,6 +32,9 @@ class JobSearchApp:
         self.search_button = tk.Button(master, text="Search Jobs", command=self.search_jobs)
         self.search_button.grid(row=2, columnspan=2, padx=10, pady=10)
 
+        # Load SpaCy English language model
+        self.nlp = spacy.load('en_core_web_sm')
+
     def load_preferences(self):
         # Load user preferences from JSON file, or set default values if file doesn't exist
         try:
@@ -55,10 +58,7 @@ class JobSearchApp:
         self.save_preferences()
 
         # Integrate chatbot for resume tailoring
-        try:
-            self.resume_tailoring_chatbot()
-        except Exception as e:
-            messagebox.showerror("Error", f"An error occurred: {str(e)}")
+        self.resume_tailoring_chatbot()
 
     def resume_tailoring_chatbot(self):
         # Questions for resume tailoring
@@ -99,10 +99,7 @@ class JobSearchApp:
         messagebox.showinfo("Application Submission", "Application submission initiated. Your resume has been tailored based on your responses.")
 
         # Initiate application submission using Selenium
-        try:
-            self.submit_application_selenium()
-        except WebDriverException as e:
-            messagebox.showerror("Error", f"Failed to submit application: {str(e)}")
+        self.submit_application_selenium()
 
     def submit_application_selenium(self):
         # Replace 'path_to_chromedriver' with the path to your Chrome WebDriver
@@ -114,19 +111,34 @@ class JobSearchApp:
         # Auto-fill form data
         driver.find_element_by_id('first_name').send_keys('John')
         driver.find_element_by_id('last_name').send_keys('Doe')
-        driver.find_element_by_id('email').send_keys('john.doe@example.com')
-        # Fill other form fields as needed
+        driver.find_element_by
 
-        # Submit the application
-        driver.find_element_by_id('submit_button').click()
+    def analyze_resume(self, resume_text, job_description):
+        # Analyze user resume and job description using SpaCy
+        doc_resume = self.nlp(resume_text)
+        doc_job_description = self.nlp(job_description)
 
-        # Close the browser
-        driver.quit()
+        # Extract skills from user resume
+        user_skills = [ent.text.lower() for ent in doc_resume.ents if ent.label_ == "SKILL"]
 
-if __name__ == "__main__":
+        # Extract skills from job description
+        job_skills = [ent.text.lower() for ent in doc_job_description.ents if ent.label_ == "SKILL"]
+
+        # Calculate similarity between user skills and job requirements
+        similarity_scores = [doc_resume.similarity(self.nlp(skill)) for skill in job_skills]
+
+        # Print matched skills and their similarity scores
+        for skill, score in zip(job_skills, similarity_scores):
+            print(f"Matched Skill: {skill}, Similarity Score: {score:.2f}")
+
+def main():
     root = tk.Tk()
     app = JobSearchApp(root)
     root.mainloop()
+
+if __name__ == "__main__":
+    main()
+
 
 
 
