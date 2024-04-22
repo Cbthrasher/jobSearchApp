@@ -1,0 +1,38 @@
+Install Dependencies:
+
+Open Command Prompt on your Windows computer.
+Install PyInstaller using pip:
+Copy code
+pip install pyinstaller
+Create a Setup Script:
+
+Create a file named setup.py in the root directory of your project.
+Copy and paste the following code into setup.py:
+python
+Copy code
+from setuptools import setup
+
+APP = ['main.py']
+OPTIONS = {
+    'argv_emulation': True,
+}
+
+setup(
+    app=APP,
+    options={'py2exe': OPTIONS},
+    setup_requires=['py2exe'],
+)
+Package Your Application:
+
+In Command Prompt, navigate to the directory containing your main.py and setup.py files.
+Run the following command to create the standalone Windows executable:
+arduino
+Copy code
+python setup.py py2exe
+Distribute Your Application:
+
+Once the packaging process is complete, you'll find a dist directory in your project folder.
+Inside the dist directory, you'll find your standalone Windows executable (.exe file).
+Distribute the .exe file to users, who can then double-click it to install and run your application on their Windows computers.
+These steps will allow you to create an installation wizard for your Python code on a Windows computer, making it easy for users to install and run your application.
+
