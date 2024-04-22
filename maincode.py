@@ -88,6 +88,16 @@ class JobSearchApp:
         else:
             messagebox.showinfo("Job Listings", "No job listings found.")
 
+    def auto_fill_job_application(self, job_url):
+        # Auto-fill job application form using Selenium
+        driver = webdriver.Chrome('path_to_chromedriver')
+        driver.get(job_url)
+
+        # Replace 'form_field_id' with the actual IDs of form fields on the job application page
+        driver.find_element_by_id('form_field_id').send_keys('User Information')
+        # Add more lines to fill out other form fields as needed
+
 if __name__ == "__main__":
     main()
+
 
